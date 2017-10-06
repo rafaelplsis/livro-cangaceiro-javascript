@@ -1,27 +1,55 @@
 class NegociacaoController{
 
     constructor(){
-        let $ = document.querySelector.bind(document);
+        const $ = document.querySelector.bind(document);
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
-        this._negociacoes = new Negociacoes();
-        this._necociacoesView = new NegociacoesView('#negociacoes');
 
-        this._necociacoesView.update(this._negociacoes);
+        const self = this;
 
-        this._mensagem = new Mensagem();
+
+        this._negociacoes = new Bind(new Negociacoes()
+                                    ,new NegociacoesView('#negociacoes')
+                                    ,'adiciona', 'esvazia');
+
+        this._mensagem = new Bind(new Mensagem(), new MessageView('#mensagemView'), 'texto');
+        this._service = new NegociacaoService();        
+    }
+
+    importaNegociacaoes(){
+        this._service.obterNegociacoesDaSemana().then(negociacoes => {
+            negociacoes.forEach(negociacao => 
+                this._negociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociações importada com sucesso';
+        },
+
+        err => {
+            this._mensagem.texto = err;
+        });
     }
 
     adiciona(event){
-        //cancelando a submissão do formulário
-        event.preventDefault();
+        try{
+            event.preventDefault();
+            this._negociacoes.adiciona(this._criaNegociacao());
+            this._mensagem.texto = 'Negociação adicionada com sucesso';
+    
+            this._limpaFormulario();
+        }catch(err){
+            if(err instanceof DataInvalidaException){
+                this._mensagem.texto = err.message;
+            }else{
+                this._mensagem.texto = 'Um erro não esperado aconteceu. Entre em contato com o suporte';
+            }
+            console.log(err);
+        }
 
-        this._negociacoes.adiciona(this._criaNegociacao());
-        this._mensagem.texto = 'Negociação adicionada com sucesso';
-        this._necociacoesView.update(this._negociacoes);
+    }
 
-        this._limpaFormulario();
+    apaga(){
+        this._negociacoes.esvazia();
+        this._mensagem.texto = 'Negociações apagadas com sucesso';
     }
 
     _limpaFormulario() {
