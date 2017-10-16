@@ -11,6 +11,7 @@ var negociacoes = [
       { data : dataAtual, quantidade : 1, valor : 150},
       { data : dataAtual, quantidade : 2, valor : 250},
       { data : dataAtual, quantidade : 3, valor : 350},
+      { data : dataAtual, quantidade : 3, valor : Math.random()},      
       { data : dataAnterior, quantidade : 1, valor : 450},
       { data : dataAnterior, quantidade : 2, valor : 550},
       { data : dataAnterior, quantidade : 3, valor : 650},
@@ -24,6 +25,10 @@ api.listaSemana = function(req, res) {
     var negociacoesAtuais = negociacoes.filter(function(negociacao) {
         return negociacao.data > dataAnterior;
     });
+    const valorAleatorio = Math.random();
+    const nego = {data : dataAtual, quantidade: 30, valor: valorAleatorio};
+    negociacoesAtuais.push(nego);
+
     res.json(negociacoesAtuais);
 };
 

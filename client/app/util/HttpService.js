@@ -15,7 +15,6 @@ class HttpService{
             };
 
             xhr.send();
-            console.log('final do get');
         });
     }
 }
