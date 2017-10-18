@@ -1,8 +1,21 @@
-class MessageView extends View{
+System.register(['./View.js'], function (_export, _context) {
+    "use strict";
 
-    template(model){
-        return model.texto
-                ?`<p class="alert alert-info">${model.texto}</p>`
-                :`<p></p>`;
-    }
-}
+    var View;
+    return {
+        setters: [function (_ViewJs) {
+            View = _ViewJs.View;
+        }],
+        execute: function () {
+            class MessageView extends View {
+
+                template(model) {
+                    return model.texto ? `<p class="alert alert-info">${model.texto}</p>` : `<p></p>`;
+                }
+            }
+
+            _export('MessageView', MessageView);
+        }
+    };
+});
+//# sourceMappingURL=MessageView.js.map

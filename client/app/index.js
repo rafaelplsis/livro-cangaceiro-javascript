@@ -1,37 +1,44 @@
-var campos = [
-        document.querySelector('#data'),
-        document.querySelector('#valor'),
-        document.querySelector('#quantidade')
-];
+System.register([], function (_export, _context) {
+        "use strict";
 
-var tbody = document.querySelector('table tbody');
+        var campos, tbody;
+        return {
+                setters: [],
+                execute: function () {
+                        campos = [document.querySelector('#data'), document.querySelector('#valor'), document.querySelector('#quantidade')];
+                        tbody = document.querySelector('table tbody');
 
-document.querySelector('.form').addEventListener('submit', function(event){
 
-        var tr = document.createElement('tr');
+                        document.querySelector('.form').addEventListener('submit', function (event) {
 
-        campos.forEach(function(campo){
-                var td = document.createElement('td');
-                td.textContent = campo.value;
-                tr.appendChild(td);
-        });
+                                var tr = document.createElement('tr');
 
-        var tdVolume = document.createElement('td');
+                                campos.forEach(function (campo) {
+                                        var td = document.createElement('td');
+                                        td.textContent = campo.value;
+                                        tr.appendChild(td);
+                                });
 
-        tdVolume.textContent = campos[1].value * campos[2].value;
+                                var tdVolume = document.createElement('td');
 
-        tr.appendChild(tdVolume);
+                                tdVolume.textContent = campos[1].value * campos[2].value;
 
-        tbody.appendChild(tr);
+                                tr.appendChild(tdVolume);
 
-        event.preventDefault();
+                                tbody.appendChild(tr);
 
-        // limpa o campo da data
-        campos[0].value = '';
-        // limpa o campo da quantidade
-        campos[1].value = 1;
-        // limpa o campo do valor
-        campos[2].value = 0;
-        // foca no campo da data
-        campos[0].focus();
+                                event.preventDefault();
+
+                                // limpa o campo da data
+                                campos[0].value = '';
+                                // limpa o campo da quantidade
+                                campos[1].value = 1;
+                                // limpa o campo do valor
+                                campos[2].value = 0;
+                                // foca no campo da data
+                                campos[0].focus();
+                        });
+                }
+        };
 });
+//# sourceMappingURL=index.js.map
